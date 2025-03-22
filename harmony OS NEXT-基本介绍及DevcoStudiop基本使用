@@ -1,0 +1,120 @@
+鸿蒙基本介绍及DevcoStudiop基本使用
+
+## 1.认识DevcoStudiop工作区
+
+### 1.1认识工作区
+
+![image-20241019110156900](https://img-blog.csdnimg.cn/img_convert/5cdd69bd61522fa12200490225249a5f.png)
+
+开发节奏：
+
+1. 通过左侧目录找到对应的应用文件，在编辑区进行代码编写，在右侧看预览效果
+2. 快捷键：连按两下shift快速寻找全局内容，如文件
+
+![image-20241019110440717](https://img-blog.csdnimg.cn/img_convert/91cfc4b721140a039677a61d24df2f01.png)
+
+### 1.2如何排错
+
+写代码时，我们经常会遇到这种情况，右侧出现不能开启预览器的提示，我们需要打开预览器日志查看报错
+
+> 1. 第一种方法
+>
+> ![image-20241019111356476](https://img-blog.csdnimg.cn/img_convert/d4e0e6a67dea1a5f37d8c17009efc74c.png)
+
+![image-20241019111301584](https://img-blog.csdnimg.cn/img_convert/15c7a15b406dfd69d45d10b8bbbbd337.png)
+
+2. 第二种方法
+
+![image-20241019111540879](https://img-blog.csdnimg.cn/img_convert/b000c3e34e54ad1746c698438ebe0670.png)
+
+3. 第三种方法：通过统一构建，暴露哪些文件及代码无法编译通过
+
+![image-20241019111759517](https://img-blog.csdnimg.cn/img_convert/81928279b4c39a2c41f5cca94e5ace8a.png)
+
+![image-20241019112033341](https://img-blog.csdnimg.cn/img_convert/fedfe58dc21a600291409d1f95c0dbb4.png)
+
+## 1.3如何刷新看效果
+
+> 预览器是有热更新的，原则上写完右侧自动更新，如果不自动更新，说明编辑器卡住了，需要连续点击两次预览器
+
+![image-20241019112446371](https://img-blog.csdnimg.cn/img_convert/f02cf86e73c2791efbdb48ba0d60a270.png)
+
+注意：刷新只能针对带有@Entry和@preview的文件，否则无法查看效果
+
+![image-20241019112815477](https://img-blog.csdnimg.cn/img_convert/d956e4dcd428d32ba60efc8635ed8932.png)
+
+## 2.基本介绍
+
+### 2.1项目的基本结构
+
+* AppScope>app.json5:应用的全局配置信息
+
+![image-20241019124811862](https://img-blog.csdnimg.cn/img_convert/69d28db60630f503d61385bf5864bc8f.png)
+
+![image-20241019125311192](https://img-blog.csdnimg.cn/img_convert/334a5f9894851a37fc6a40315535ce05.png)
+
+![image-20241019125628759](https://img-blog.csdnimg.cn/img_convert/972f8e110262b0e0d7e0bc388bfe5b57.png)
+
+![image-20241019125841426](https://img-blog.csdnimg.cn/img_convert/2ea97cdfb11976f8972738adf5b77fb0.png)
+
+* entry：应用/服务模块，编译构建生成一个HAP
+  * src>main>ets:用于存放ArkTS源码
+  * src>main>ets>entryability:应用/服务的入口,只能有一个入口
+  * src>main>ets>pages:应用/服务包含的页面，页面只能放在pages里，不能放在pages外
+  * src>main>resource：用于存放应用/服务模块所用到的资源文件，如图形、多媒体、字符串、布局文件等
+  * src>main>module.json5:Stage模型模块配置文件、主要包含HAP的配置信息、应用在多媒体设备上的配置信息以及应用的全局配置信息
+
+### 2.2什么是Stage模型
+
+>  State
+>
+>  ​	-Moudle(模块- -对应HAP包)
+>
+>  ​		-ability（应用服务入口）
+>
+>  ​			-pages(页面)
+>
+>  ​				-component（自定义组件）
+>
+>  ​			-resourse(资源)
+
+![image-20241019132014457](https://img-blog.csdnimg.cn/img_convert/a9141cf01b5743b9459c837b8f7b74e0.png)
+
+![image-20241019132042999](https://img-blog.csdnimg.cn/img_convert/dd0441a280db2407f05573723294fb79.png)
+
+一个app里面可以有多个模块，就是多个HAP包，一个HAP包下可以有多个ability，一个ability可以有多个页面，一个页面下也可以有多个组件
+
+### 2.3应用模型Stage&FA
+
+> 鸿蒙的战略   兼容安卓-把java+前端拉入到开发阵容中-FA模型，没有成功
+>
+> 鸿蒙4.0- - -Stage模型，把所有的语言统一了，都是以ArkTs语言，万物互联
+>
+> 换言之-应用模型是鸿蒙开发一切的基础，因为只有基于该模型我们才可以开发对应的应用和有业务
+>
+> 应用模型包含以下几个要素   应用组件->应用进程>应用线程>应用任务管理>应用配置文件
+>
+> 鸿蒙工程师->调包工程师
+>
+> 应用模型只有一个吗？
+>
+> 前后推出了两个模型：FA模型、Stage，目前FA已经不在主推，已经被砍掉了
+
+1. Stage模型示意图
+
+![image-20241019133547887](https://img-blog.csdnimg.cn/img_convert/7cd784d9fb8e2af8ef6812274928b2a6.png)
+
+### 2.4什么是UIAbility-(页面能力组件)
+
+* UIAbility组件是一种包含UI界面的应用组件，主要用来和用户交互
+* 官网介绍-UIAbility是**系统调度的基本单元**，可以给应用提供绘制界面的**窗口**
+* UIAbility的设计理念
+  * 原生支持应用组件级的跨端迁移和多段协同
+  * 支持多设备和多窗口形态
+* UIAbility组件是系统调度的基本单元，为应用提供绘制页面的窗口。一个应用可以包含一个或多个UIAbility组件。例如，在支付应用中，可以将入口功能和收付款功能分别配置为独立的UIAbility
+
+>如果开发者希望在任务视图中看到一个任务，则建议使用一个UIAbility,多个页面的方式
+>
+>如果开发者希望在任务视图中看到多个任务，或者需要开启多个窗口，则建议使用多个UIAbility开发多个不同的模块
+>
+>举例子：支付场景-携程、智行火车票  付款的时候-调用了微信支付/支付宝制服
